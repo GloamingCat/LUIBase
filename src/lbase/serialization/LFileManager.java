@@ -38,7 +38,7 @@ public class LFileManager {
 			reader.close();
 			return array;
 		} catch(Exception e) {
-			System.out.println("couldn't load: " + path);
+			System.err.println("Couldn't load: " + path);
 			e.printStackTrace();
 			return null;
 		}
@@ -51,11 +51,11 @@ public class LFileManager {
 			File file = new File(path);
 			file.getParentFile().mkdirs();
 			FileOutputStream writer = new FileOutputStream(file);
-		    writer.write(content);
-		    writer.close();
-		    return true;
+			writer.write(content);
+			writer.close();
+			return true;
 		} catch(Exception e) {
-			System.out.println("couldn't save: " + path);
+			System.err.println("Couldn't save: " + path);
 			return false;
 		}
 	}

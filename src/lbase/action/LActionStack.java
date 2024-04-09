@@ -34,7 +34,7 @@ public class LActionStack {
 	}
 	
 	//////////////////////////////////////////////////
-	// {{ Actions
+	//region Actions
 	
 	public void newAction(LAction action) {
 		while (lastAction < actions.size()) {
@@ -91,6 +91,6 @@ public class LActionStack {
 		actions.clear();
 	}
 	
-	// }}
+	//endregion
 	
 }

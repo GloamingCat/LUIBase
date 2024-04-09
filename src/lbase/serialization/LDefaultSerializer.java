@@ -47,7 +47,7 @@ public abstract class LDefaultSerializer implements LSerializer {
 			deserialize(bytes);
 			return true;
 		} catch(Exception e) {
-			System.out.println(path);
+			System.err.println("Deserialization error: " + path);
 			e.printStackTrace();
 			return false;
 		}

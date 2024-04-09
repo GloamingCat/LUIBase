@@ -56,15 +56,6 @@ public class LPath {
 		}
 	}
 	
-	public void print() {
-		LPath path = this;
-		while(path != null) {
-			System.out.print(path.index + " ");
-			path = path.child;
-		}
-		System.out.println();
-	}
-	
 	public String toString() {
 		String s = "";
 		LPath path = this;

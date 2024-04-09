@@ -5,8 +5,8 @@ import lbase.gui.LControl;
 
 public class LControlAction<T> implements LAction {
 	
-	private LControl<T> control;
-	private LControlEvent<T> event;
+	private final LControl<T> control;
+	private final LControlEvent<T> event;
 	
 	public LControlAction(LControl<T> control, LControlEvent<T> event) {
 		this.control = control;
