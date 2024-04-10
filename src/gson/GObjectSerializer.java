@@ -2,7 +2,7 @@ package gson;
 
 import java.lang.reflect.Type;
 
-import lbase.serialization.LObjectSerializer;
+import lui.base.serialization.LObjectSerializer;
 
 public class GObjectSerializer<T> extends LObjectSerializer<T> {
 	

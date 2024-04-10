@@ -2,7 +2,7 @@ package gson;
 
 import java.lang.reflect.Type;
 
-import lbase.data.LDataTree;
+import lui.base.data.LDataTree;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
