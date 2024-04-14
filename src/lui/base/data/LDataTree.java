@@ -35,6 +35,11 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 		parent.addChild(this);
 	}
 
+	public LDataTree(int id, T data) {
+		this.id = id;
+		this.data = data;
+	}
+
 	public LDataTree(T data, LDataTree<T> parent) {
 		this.data = data;
 		this.parent = parent;
@@ -46,7 +51,7 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 		this.parent = parent;
 		parent.addChild(this, index);
 	}
-	
+
 	@Override
 	public void set(LDataCollection<T> data) {
 		LDataTree<T> tree = (LDataTree<T>) data;
@@ -116,12 +121,8 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 	}
 	
 	public void setKeyID(String key, int id) {
-		HashSet<Integer> set = idMap.get(key);
-		if (set == null) {
-			set = new HashSet<Integer>();
-			idMap.put(key, set);
-		}
-		set.add(id);
+        HashSet<Integer> set = idMap.computeIfAbsent(key, k -> new HashSet<>());
+        set.add(id);
 	}
 
 	public void restoreParents() {
@@ -252,7 +253,7 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 		Stack<LDataTree<T>> nodeStack = new Stack<>();
 		ArrayList<Integer> usedIDs = new ArrayList<>();
 		nodeStack.push(this);
-		while (nodeStack.isEmpty() == false) {
+		while (!nodeStack.isEmpty()) {
 			LDataTree<T> node = nodeStack.pop();
 			for (Integer id : node.dataMap.keySet()) {
 				if (id >= 0)
@@ -275,38 +276,47 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 	}
 	
 	public String encode(Function<T, String> encoder) {
-		String str = id + " | " + children.size() + " | "
-				+ encoder.apply(data) + " | ";
+		StringBuilder str = new StringBuilder(id + " | " + children.size() + " | "
+                + encoder.apply(data) + " | ");
 		for (LDataTree<T> child : children) {
-			str = str + child.encode(encoder);
+			str.append(child.encode(encoder));
 		}
-		return str;
+		return str.toString();
 	}
 	
 	public static <TT> LDataTree<TT> decode(String str, Function<String, TT> decoder) {
 		try {
-			// Get ID
-			int i = str.indexOf(" | ");
-			int id = Integer.parseInt(str.substring(0, i));
-			str = str.substring(i + 3);
-			// Get number of children
-			i = str.indexOf(" | ");
-			int children = Integer.parseInt(str.substring(0, i));
-			str = str.substring(i + 3);
-			// Get data
-			i = str.indexOf(" | ");
-			TT data = decoder.apply(str.substring(0, i));
-			str = str.substring(i + 3);
-			// Get children
-			LDataTree<TT> node = new LDataTree<TT>(data);
-			node.id = id;
-			for (i = 0; i < children; i++) {
-				LDataTree<TT> child = decode(str, decoder);
-				if (child == null)
-					return null;
-				child.setParent(node);
+			System.out.println(str);
+			LDataTree<TT> root = new LDataTree<>();
+			Stack<LDataTree<TT>> stack = new Stack<>();
+			stack.add(root);
+			while (!stack.isEmpty()) {
+				LDataTree<TT> node = stack.pop();
+				if (node.parent != null)
+					node.parent.addChild(node);
+				// Get ID
+				int i = str.indexOf(" | ");
+				if (i < 0) return null;
+				node.id = Integer.parseInt(str.substring(0, i));
+				str = str.substring(i + 3);
+				// Get number of children
+				i = str.indexOf(" | ");
+				if (i < 0) return null;
+				int children = Integer.parseInt(str.substring(0, i));
+				str = str.substring(i + 3);
+				// Get data
+				i = str.indexOf(" | ");
+				if (i < 0) return null;
+				node.data = decoder.apply(str.substring(0, i));
+				str = str.substring(i + 3);
+				// Get children
+				for (i = 0; i < children; i++) {
+					LDataTree<TT> child = new LDataTree<>();
+					child.parent = node;
+					stack.add(child);
+				}
 			}
-			return node;
+			return root;
 		} catch(NumberFormatException | IndexOutOfBoundsException e) {
 			return null;
 		}
