@@ -4,13 +4,24 @@ import lui.base.serialization.LFileManager;
 import lui.base.serialization.LSerializer;
 
 public interface LApplicationWindow extends LWindow {
+
+	//////////////////////////////////////////////////
+	//region UI
+
 	void run();
 	String getApplicationName();
-	String getProjectExtension();
+
 	LWindow getWindow();
 	void refreshEditButtons();
 	void refreshClipboardButtons();
 	LMenu getEditMenu();
+
+	//endregion
+
+	//////////////////////////////////////////////////
+	//region Project
+
+	String getProjectExtension();
 	
 	LSerializer createProject(String path);
 	
@@ -53,33 +64,41 @@ public interface LApplicationWindow extends LWindow {
 		return project;
 	}
 	
-	default LSerializer loadDefault(String path) {
+	default boolean loadDefault(String path) {
 		if (path == null) {
 			String lattest = LFileManager.appDataPath(getApplicationName()) + "lattest.txt";
 			byte[] bytes = LFileManager.load(lattest);
 			if (bytes != null && bytes.length > 0) {
 				path = new String(bytes);
 			} else {
-				return null;
+				return false;
 			}
 		}
 		LSerializer project = createProject(path);
 		if (!project.load()) {
 			onLoadFail(path);
-			return null;
+			return false;
 		} else {
-			onLoadSuccess(project);
-			return project;
+			onLoadSuccess(project, path);
+			return true;
 		}
 	}
+
+	void onLoadSuccess(LSerializer project, String path);
+	void onLoadFail(String path);
+
+	//endregion
+
+	//////////////////////////////////////////////////
+	//region Dialogs
 
 	String openNewProjectDialog();
 	boolean openNewConfirmDialog();
 	String openLoadProjectDialog();
 	void openLoadErrorDialog(String file);
-	
-	void onLoadSuccess(LSerializer project);
-	void onLoadFail(String path);
+
 	boolean askSave();
+
+	//endregion
 
 }
