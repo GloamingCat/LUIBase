@@ -7,11 +7,11 @@ import lui.base.gui.LCollection;
 
 public class LMoveAction<T> implements LAction {
 
-	private LCollection<T, ?> collection;
-	private LPath sourceParent;
-	private LPath destParent;
-	private int sourceIndex;
-	private int destIndex;
+	private final LCollection<T, ?> collection;
+	private final LPath sourceParent;
+	private final LPath destParent;
+	private final int sourceIndex;
+	private final int destIndex;
 	
 	public LMoveAction(LCollection<T, ?> collection, LPath sourceParent, int sourceIndex, LPath destParent, int destIndex) {
 		this.collection = collection;

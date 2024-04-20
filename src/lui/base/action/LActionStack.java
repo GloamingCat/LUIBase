@@ -18,15 +18,17 @@ public class LActionStack {
 	
 	private int savedAction = 0;
 	private int lastAction = 0;
-	private ArrayList<Node> actions = new ArrayList<>();
-	private LView rootEditor;
-	private LApplicationWindow shell;
+	private final ArrayList<Node> actions = new ArrayList<>();
+	private final LView rootEditor;
+	private final LApplicationWindow shell;
 	
 	public LActionStack(LView rootEditor) {
 		this.rootEditor = rootEditor;
 		LActionManager.getInstance().addStack(this);
 		if (rootEditor.getWindow() instanceof LApplicationWindow)
 			shell = (LApplicationWindow) rootEditor.getWindow();
+		else
+			shell = null;
 	}
 	
 	public LView getRootView() {
@@ -56,16 +58,14 @@ public class LActionStack {
 				shell.refreshEditButtons();
 		}
 	}
-	
+
 	public void redo() {
 		if (lastAction < actions.size()) {
 			actions.get(lastAction).state.reset();
 			actions.get(lastAction).action.redo();
 			lastAction++;
-			if (rootEditor.getWindow() instanceof LApplicationWindow) {
-				LApplicationWindow shell = (LApplicationWindow) rootEditor.getWindow();
+			if (shell != null)
 				shell.refreshEditButtons();
-			}
 		}
 	}
 	
