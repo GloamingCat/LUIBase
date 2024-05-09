@@ -8,5 +8,6 @@ public class LPrefs {
 
     public static int GRIDSPACING = 4;
     public static int FRAMEMARGIN = 6;
+    public static int LABELPADDING = 3;
 
 }

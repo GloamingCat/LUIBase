@@ -1,5 +1,6 @@
 package lui.base.data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import java.util.function.Function;
 
 public class LDataTree<T> implements Serializable, LDataCollection<T> {
 
+	@Serial
 	private static final long serialVersionUID = 2898742643380172905L;
 
 	public transient LDataTree<T> parent;
@@ -286,7 +288,6 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 	
 	public static <TT> LDataTree<TT> decode(String str, Function<String, TT> decoder) {
 		try {
-			System.out.println(str);
 			LDataTree<TT> root = new LDataTree<>();
 			Stack<LDataTree<TT>> stack = new Stack<>();
 			stack.add(root);
@@ -320,6 +321,11 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 		} catch(NumberFormatException | IndexOutOfBoundsException e) {
 			return null;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return data + " " + children;
 	}
 
 }

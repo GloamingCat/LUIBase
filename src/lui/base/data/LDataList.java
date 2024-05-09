@@ -1,9 +1,11 @@
 package lui.base.data;
 
+import java.io.Serial;
 import java.util.ArrayList;
 
 public class LDataList<T> extends ArrayList<T> implements LDataCollection<T> {
 
+	@Serial
 	private static final long serialVersionUID = -6494822823659233992L;
 
 	public LDataList() {
@@ -80,7 +82,7 @@ public class LDataList<T> extends ArrayList<T> implements LDataCollection<T> {
 	public LDataTree<Object> toObjectTree() {
 		LDataTree<Object> root = new LDataTree<Object>();
 		for(T element : this) {
-			new LDataTree<Object>(element, root);
+			new LDataTree<>(element, root);
 		}
 		return root;
 	}

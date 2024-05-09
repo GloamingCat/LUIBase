@@ -3,7 +3,7 @@ package lui.base.gui;
 import lui.base.LFlags;
 import lui.base.data.LPoint;
 
-public class LLayoutData {
+public class LCellData {
 
     protected int hSpread = 1, vSpread = 1;
     protected boolean hExpand = false, vExpand = false;
@@ -35,11 +35,11 @@ public class LLayoutData {
         minHeight = h;
     }
 
-    public void setPreferredSize(LPoint size) {
-        setPreferredSize(size.x, size.y);
+    public void setTargetSize(LPoint size) {
+        setTargetSize(size.x, size.y);
     }
 
-    public void setPreferredSize(int w, int h) {
+    public void setTargetSize(int w, int h) {
         width = w;
         height = h;
     }

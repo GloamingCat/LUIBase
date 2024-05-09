@@ -4,7 +4,7 @@ import lui.base.data.LPoint;
 
 public interface LLayedCell {
 
-    LLayoutData getCellData();
+    LCellData getCellData();
 
     LPoint getCurrentSize();
 
