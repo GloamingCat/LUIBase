@@ -13,5 +13,10 @@ public class LMouseEvent {
 		this.y = y;
 		this.type = type;
 	}
+
+	@Override
+	public String toString() {
+		return "Mouse event: Button=" + button + "; type=" + type +  "; x=" + x + "; y=" + y;
+	}
 	
 }

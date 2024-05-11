@@ -10,6 +10,7 @@ public class LPoint {
 		x = i.x;
 		y = i.y;
 	}
+
 	public LPoint(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -22,19 +23,29 @@ public class LPoint {
 	public int second() {
 		return y;
 	}
+
+	@Override
 	public String toString() {
 		return "(" + x + "," + y + ")";
 	}
-	
+
+	@Override
 	public boolean equals(Object other) {
-		if (other instanceof LPoint) {
-			LPoint t = (LPoint) other;
-			return t.x == x && t.y == y;// && t.z == z;
+		if (other instanceof LPoint t) {
+            return t.x == x && t.y == y;
 		} else return false;
 	}
-	
+
+	@Override
 	public LPoint clone() {
-		return new LPoint(x, y);
+        try {
+            LPoint clone = (LPoint) super.clone();
+			clone.x = x;
+			clone.y = y;
+			return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
 	}
 	
 }

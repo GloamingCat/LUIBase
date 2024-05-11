@@ -9,10 +9,10 @@ import lui.base.gui.LCollection;
 
 public class LDeleteAction<T> implements LAction {
 
-	private LCollection<T, ?> collection;
-	private LPath parentPath;
-	private int index;
-	private LDataTree<T> node;
+	private final LCollection<T, ?> collection;
+	private final LPath parentPath;
+	private final int index;
+	private final LDataTree<T> node;
 	
 	public LDeleteAction(LCollection<T, ?> c, LPath parentPath, int index, LDataTree<T> node) {
 		collection = c;

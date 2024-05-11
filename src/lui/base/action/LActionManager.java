@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class LActionManager {
 
-	private static LActionManager instance = new LActionManager();
+	private static final LActionManager instance = new LActionManager();
 	
-	private ArrayList<LActionStack> stacks = new ArrayList<>();
+	private final ArrayList<LActionStack> stacks = new ArrayList<>();
 	
 	public static LActionManager getInstance() {
 		return instance;

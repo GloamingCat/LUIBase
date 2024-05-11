@@ -3,6 +3,7 @@ package lui.base.serialization;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +35,8 @@ public class LFileManager {
 			File file = new File(path);
 			FileInputStream reader = new FileInputStream(file);
 			byte[] array = new byte[(int) file.length()];
-			reader.read(array);
+			if (reader.read(array) <= 0)
+				throw new IOException("No byte read.");
 			reader.close();
 			return array;
 		} catch(Exception e) {
@@ -49,7 +51,10 @@ public class LFileManager {
 		path = path.replace("/", File.separator);
 		try {
 			File file = new File(path);
-			file.getParentFile().mkdirs();
+			if (!file.exists()) {
+				if (!file.getParentFile().mkdirs())
+					throw new IOException("Couldn't create directory.");
+			}
 			FileOutputStream writer = new FileOutputStream(file);
 			writer.write(content);
 			writer.close();

@@ -10,7 +10,7 @@ import com.google.gson.JsonElement;
 public class GObjectListSerializer extends GObjectSerializer<LDataList<Object>>
 		implements GListSerializer<Object> {
 
-	private Type dataType;
+	private final Type dataType;
 	
 	public GObjectListSerializer(String path, Class<?> type) {
 		super(path, LDataList.class);

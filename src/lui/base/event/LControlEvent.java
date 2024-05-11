@@ -4,7 +4,7 @@ public class LControlEvent<T> {
 	
 	public T oldValue;
 	public T newValue;
-	public int detail;
+	public int detail = 0;
 	
 	public LControlEvent(T oldValue, T newValue) {
 		this.oldValue = oldValue;

@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 public class GObjectTreeSerializer extends GObjectSerializer<LDataTree<Object>>
 		implements GTreeSerializer<Object> {
 
-	private Type dataType;
+	private final Type dataType;
 	
 	public GObjectTreeSerializer(String path, Class<?> type) {
 		super(path, LDataTree.class);
@@ -65,8 +65,7 @@ public class GObjectTreeSerializer extends GObjectSerializer<LDataTree<Object>>
 		LDataTree<Object> node = new LDataTree<>();
 		JsonObject obj = je.getAsJsonObject();
 		if (obj.has("id")) {
-			int id = obj.get("id").getAsInt();
-			node.id = id;
+            node.id = obj.get("id").getAsInt();
 		}
 		if (obj.has("data")) {
 			JsonObject dat = obj.get("data").getAsJsonObject();

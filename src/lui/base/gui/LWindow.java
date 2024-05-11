@@ -1,5 +1,6 @@
 package lui.base.gui;
 
 public interface LWindow {
-    public void setTitle(String title);
+    void setTitle(String title);
+    void pack();
 }

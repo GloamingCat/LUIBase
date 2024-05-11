@@ -14,7 +14,7 @@ public abstract class GMultiSerializer<NodeT, DataT, CollectionType>
 	public <T> GMultiSerializer(String folder, String fileName, Type collectionType, Type dataType) {
 		super(folder + fileName, collectionType);
 		this.folder = folder;
-		nodeSerializer = new GObjectSerializer<DataT>("", dataType);
+		nodeSerializer = new GObjectSerializer<>("", dataType);
 	}
 	
 	@Override

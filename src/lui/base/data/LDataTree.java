@@ -63,15 +63,22 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 		children.clear();
 		children.addAll(tree.children);
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public LDataTree<T> clone() {
-		LDataTree<T> tree = new LDataTree<T>();
-		tree.data = data;
-		for (var child : children) {
-			tree.children.add(child.clone());
-		}
-		return tree;
+        try {
+            LDataTree<T> clone = (LDataTree<T>) super.clone();
+			LDataTree<T> tree = new LDataTree<>();
+			tree.data = data;
+			for (var child : children) {
+				tree.children.add(child.clone());
+			}
+			return tree;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+
 	}
 	
 	public void initID(int id) {
@@ -190,7 +197,7 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 	}
 	
 	public LDataTree<Object> toObjectTree() {
-		LDataTree<Object> tree = new LDataTree<Object>(data);
+		LDataTree<Object> tree = new LDataTree<>(data);
 		for (LDataTree<T> node : children) {
 			tree.addChild(node.toObjectTree());
 		}

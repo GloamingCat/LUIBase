@@ -10,4 +10,7 @@ public class LPrefs {
     public static int FRAMEMARGIN = 6;
     public static int LABELPADDING = 3;
 
+    public static int LISTWIDTH = 180;
+    public static int LISTHEIGHT = 120;
+
 }

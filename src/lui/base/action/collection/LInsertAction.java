@@ -9,10 +9,10 @@ import lui.base.gui.LCollection;
 
 public class LInsertAction<T> implements LAction {
 
-	private LCollection<T, ?> collection;
-	private LPath parent;
-	private int index;
-	private LDataTree<T> node;
+	private final LCollection<T, ?> collection;
+	private final LPath parent;
+	private final int index;
+	private final LDataTree<T> node;
 	
 	public LInsertAction(LCollection<T, ?> c, LPath parent, int index, LDataTree<T> node) {
 		collection = c;

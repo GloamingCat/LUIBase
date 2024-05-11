@@ -7,10 +7,10 @@ import lui.base.gui.LCollection;
 
 public class LEditAction<T> implements LAction {
 
-	private LCollection<?, T> collection;
-	private LPath path;
-	private T oldData;
-	private T newData;
+	private final LCollection<?, T> collection;
+	private final LPath path;
+	private final T oldData;
+	private final T newData;
 	
 	public LEditAction(LCollection<?, T> collection, LPath path, T oldData, T newData) {
 		this.collection = collection;

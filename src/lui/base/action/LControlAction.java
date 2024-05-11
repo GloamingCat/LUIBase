@@ -19,10 +19,9 @@ public class LControlAction<T> implements LAction {
 	}
 	
 	private void swap() {
-		T oldv = event.oldValue;
-		T newv = event.newValue;
-		event.oldValue = newv;
-		event.newValue = oldv;
+		T temp = event.oldValue;
+		event.oldValue = event.newValue;
+		event.newValue = temp;
 	}
 	
 	@Override

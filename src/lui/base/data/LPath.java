@@ -4,12 +4,7 @@ public class LPath {
 
 	public int index;
 	public LPath child;
-	
-	/**
-	 * Create a path to the collection's tree with the given index.
-	 * @param collection
-	 * @param index
-	 */
+
 	public LPath(int index) {
 		this.index = index;
 	}
@@ -34,36 +29,31 @@ public class LPath {
 		newLast.child = new LPath(index);
 		return newPath;
 	}
-	
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null)
 			return false;
-		if (obj instanceof LPath) {
-			LPath path = (LPath) obj;
-			if (path.index != index) {
+		if (obj instanceof LPath path) {
+            if (path.index != index)
 				return false;
-			}
-			if (child == null) {
-				if (path.child == null) {
-					return true;
-				} else {
-					return false;
-				}
-			}
+			if (child == null)
+                return path.child == null;
 			return child.equals(path.child);
 		} else {
 			return false;
 		}
 	}
-	
+
+	@Override
 	public String toString() {
-		String s = "";
+		StringBuilder s = new StringBuilder();
 		LPath path = this;
 		while(path != null) {
-			s += path.index + " ";
+			s.append(path.index).append(" ");
 			path = path.child;
 		}
-		return s;
+		return s.toString();
 	}
 	
 }

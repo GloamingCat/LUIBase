@@ -6,7 +6,7 @@ import lui.base.serialization.LObjectSerializer;
 
 public class GObjectSerializer<T> extends LObjectSerializer<T> {
 	
-	protected Type type;
+	protected final Type type;
 	
 	public GObjectSerializer(String path, Type type) {
 		super(path + ".json");

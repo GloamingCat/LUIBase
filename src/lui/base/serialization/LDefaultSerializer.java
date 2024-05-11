@@ -18,7 +18,10 @@ public abstract class LDefaultSerializer implements LSerializer {
 	public boolean isDataFolder(String path) {
 		File file = new File(this.path);
 		File folder = new File(path);
-		for (File entry : folder.listFiles()) {
+		File[] children = folder.listFiles();
+		if (children == null)
+			return false;
+		for (File entry : children) {
 			if (entry.isFile() && entry.equals(file)) {
 				return true;
 			}

@@ -27,14 +27,11 @@ public class LDataList<T> extends ArrayList<T> implements LDataCollection<T> {
 		for (LDataTree<T> node : tree.children)
 			add(node.data);
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public LDataList<T> clone() {
-		LDataList<T> list = new LDataList<T>();
-		for (T element : this) {
-			list.add(element);
-		}
-		return list;
+		return (LDataList<T>) super.clone();
 	}
 	
 	@Override
@@ -71,16 +68,16 @@ public class LDataList<T> extends ArrayList<T> implements LDataCollection<T> {
 	}
 
 	public LDataTree<T> toTree() {
-		LDataTree<T> root = new LDataTree<T>();
+		LDataTree<T> root = new LDataTree<>();
 		int i = 0;
 		for(T element : this) {
-			new LDataTree<T>(i++, element, root);
+			new LDataTree<>(i++, element, root);
 		}
 		return root;
 	}
 	
 	public LDataTree<Object> toObjectTree() {
-		LDataTree<Object> root = new LDataTree<Object>();
+		LDataTree<Object> root = new LDataTree<>();
 		for(T element : this) {
 			new LDataTree<>(element, root);
 		}

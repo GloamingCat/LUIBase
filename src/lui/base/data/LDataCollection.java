@@ -1,6 +1,6 @@
 package lui.base.data;
 
-public interface LDataCollection<T> {
+public interface LDataCollection<T> extends Cloneable {
 
 	void insert(LPath parentPath, int index, LDataTree<T> node);
 	void delete(LPath parentPath, int index);

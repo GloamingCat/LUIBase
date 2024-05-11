@@ -6,7 +6,7 @@ import lui.base.data.LDataList;
 
 public interface GListSerializer<T> {
 
-	public Type getDataType();
-	public LDataList<T> getList();
+	Type getDataType();
+	LDataList<T> getList();
 	
 }
