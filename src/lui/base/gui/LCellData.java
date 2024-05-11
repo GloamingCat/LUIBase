@@ -26,11 +26,11 @@ public class LCellData {
         alignment = a;
     }
 
-    public void setMinimumSize(LPoint size) {
-       setMinimumSize(size.x, size.y);
+    public void setRequiredSize(LPoint size) {
+       setRequiredSize(size.x, size.y);
     }
 
-    public void setMinimumSize(int w, int h) {
+    public void setRequiredSize(int w, int h) {
         minWidth = w;
         minHeight = h;
     }
