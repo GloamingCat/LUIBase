@@ -2,12 +2,7 @@ package lui.base.data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
-import java.util.HashSet;
-import java.util.Stack;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.function.Function;
 
 public class LDataTree<T> implements Serializable, LDataCollection<T> {
@@ -85,6 +80,16 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 		this.id = id;
 		if (parent != null) {
 			parent.dataMap.put(id, data);
+		}
+	}
+
+	public void initIDs(LDataTree<T> node) {
+		LinkedList<LDataTree<T>> nodes = new LinkedList<>();
+		nodes.add(node);
+		for (node = nodes.poll(); node != null; node = nodes.poll()) {
+			int id = findID();
+			node.initID(id);
+			nodes.addAll(node.children);
 		}
 	}
 
