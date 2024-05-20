@@ -57,22 +57,27 @@ public interface LApplicationWindow extends LWindow {
 			String path = LFileManager.appDataPath(getApplicationName()) + "lattest.txt";
 			byte[] bytes = resultFile.getBytes();
 			LFileManager.save(path, bytes);
+			onLoadSuccess(project, resultFile);
 		} else {
-			openLoadErrorDialog(resultFile);
+			onLoadFail(resultFile);
 			return null;
 		}
 		return project;
 	}
-	
+
+	default String defaultProjectPath() {
+		String lattest = LFileManager.appDataPath(getApplicationName()) + "lattest.txt";
+		byte[] bytes = LFileManager.load(lattest);
+		if (bytes != null && bytes.length > 0) {
+			return new String(bytes);
+		} else {
+			return null;
+		}
+	}
+
 	default boolean loadDefault(String path) {
 		if (path == null) {
-			String lattest = LFileManager.appDataPath(getApplicationName()) + "lattest.txt";
-			byte[] bytes = LFileManager.load(lattest);
-			if (bytes != null && bytes.length > 0) {
-				path = new String(bytes);
-			} else {
-				return false;
-			}
+			path = defaultProjectPath();
 		}
 		LSerializer project = createProject(path);
 		if (!project.load()) {
@@ -95,7 +100,6 @@ public interface LApplicationWindow extends LWindow {
 	String openNewProjectDialog();
 	boolean openNewConfirmDialog();
 	String openLoadProjectDialog();
-	void openLoadErrorDialog(String file);
 
 	boolean askSave();
 
