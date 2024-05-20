@@ -8,6 +8,15 @@ public class LPath {
 	public LPath(int index) {
 		this.index = index;
 	}
+
+	public LPath(LPath parent, int lastIndex) {
+		if (parent == null) {
+			this.index = lastIndex;
+		} else {
+			this.index = parent.index;
+			this.child = new LPath(parent.child, lastIndex);
+		}
+	}
 	
 	public LPath lastChild() {
 		LPath p = this;
@@ -48,9 +57,10 @@ public class LPath {
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
-		LPath path = this;
+		s.append(index);
+		LPath path = child;
 		while(path != null) {
-			s.append(path.index).append(" ");
+			s.append(" ").append(path.index);
 			path = path.child;
 		}
 		return s.toString();

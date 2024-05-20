@@ -36,4 +36,9 @@ public class LControlAction<T> implements LAction {
 		apply();
 	}
 
+	@Override
+	public String toString() {
+		return "Control Action: " + "oldValue=" + event.oldValue + "; newValue=" + event.newValue + "; control=" + control;
+	}
+
 }

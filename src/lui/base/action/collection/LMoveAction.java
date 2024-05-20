@@ -33,4 +33,10 @@ public class LMoveAction<T> implements LAction {
 		collection.notifyMoveListeners(e);
 	}
 
+	@Override
+	public String toString() {
+		return "Move from " + new LPath(sourceParent, sourceIndex)
+				+ " to " + new LPath(destParent, destIndex) + "; collection=" + collection;
+	}
+
 }

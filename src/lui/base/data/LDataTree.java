@@ -64,16 +64,15 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 	public LDataTree<T> clone() {
         try {
             LDataTree<T> clone = (LDataTree<T>) super.clone();
-			LDataTree<T> tree = new LDataTree<>();
-			tree.data = data;
+			clone.data = data;
+			clone.id = id;
 			for (var child : children) {
-				tree.children.add(child.clone());
+				child.clone().setParent(this);
 			}
-			return tree;
+			return clone;
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
-
 	}
 	
 	public void initID(int id) {
@@ -86,9 +85,11 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 	public void initIDs(LDataTree<T> node) {
 		LinkedList<LDataTree<T>> nodes = new LinkedList<>();
 		nodes.add(node);
+		HashSet<Integer> usedIds = getUsedIds();
 		for (node = nodes.poll(); node != null; node = nodes.poll()) {
-			int id = findID();
+			int id = findID(usedIds);
 			node.initID(id);
+			usedIds.add(id);
 			nodes.addAll(node.children);
 		}
 	}
@@ -263,9 +264,9 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 		return null;
 	}
 
-	public int findID() {
+	private HashSet<Integer> getUsedIds() {
 		Stack<LDataTree<T>> nodeStack = new Stack<>();
-		ArrayList<Integer> usedIDs = new ArrayList<>();
+		HashSet<Integer> usedIDs = new HashSet<>();
 		nodeStack.push(this);
 		while (!nodeStack.isEmpty()) {
 			LDataTree<T> node = nodeStack.pop();
@@ -277,15 +278,18 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 				nodeStack.push(child);
 			}
 		}
-		Collections.sort(usedIDs);
+		return usedIDs;
+	}
+
+	public int findID() {
+		HashSet<Integer> usedIDs = getUsedIds();
+		return findID(usedIDs);
+	}
+
+	public int findID(HashSet<Integer> usedIDs) {
 		int chosenID = 0;
-		for (Integer id : usedIDs) {
-			if (chosenID == id) {
-				chosenID++;
-			} else {
-				break;
-			}
-		}
+		while (usedIDs.contains(chosenID))
+			chosenID++;
 		return chosenID;
 	}
 	

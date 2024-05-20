@@ -33,4 +33,9 @@ public class LEditAction<T> implements LAction {
 		collection.refreshObject(path);
 	}
 
+	@Override
+	public String toString() {
+		return "Edit Action: " + "oldValue=" + oldData + "; newValue=" + newData + "; path=" + path + "; collection=" + collection;
+	}
+
 }

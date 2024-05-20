@@ -33,4 +33,9 @@ public class LDeleteAction<T> implements LAction {
 		collection.notifyDeleteListeners(e);
 	}
 
+	@Override
+	public String toString() {
+		return "Delete " + new LPath(parentPath, + index) + "; collection=" + collection;
+	}
+
 }

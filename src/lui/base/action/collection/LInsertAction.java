@@ -32,5 +32,10 @@ public class LInsertAction<T> implements LAction {
 		LInsertEvent<T> e = collection.insert(parent, index, node);
 		collection.notifyInsertListeners(e);
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Insert into " + new LPath(parent, index) + "; collection=" + collection;
+	}
+
 }

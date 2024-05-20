@@ -51,7 +51,7 @@ public class LFileManager {
 		path = path.replace("/", File.separator);
 		try {
 			File file = new File(path);
-			if (!file.exists()) {
+			if (!file.exists() && !file.getParentFile().exists()) {
 				if (!file.getParentFile().mkdirs())
 					throw new IOException("Couldn't create directory.");
 			}
@@ -61,6 +61,7 @@ public class LFileManager {
 			return true;
 		} catch(Exception e) {
 			System.err.println("Couldn't save: " + path);
+			e.printStackTrace();
 			return false;
 		}
 	}
