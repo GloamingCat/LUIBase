@@ -3,17 +3,17 @@ package lui.base.action.collection;
 import lui.base.action.LAction;
 import lui.base.data.LPath;
 import lui.base.event.LMoveEvent;
-import lui.base.gui.LCollection;
+import lui.base.gui.LEditableCollection;
 
 public class LMoveAction<T> implements LAction {
 
-	private final LCollection<T, ?> collection;
+	private final LEditableCollection<T, ?> collection;
 	private final LPath sourceParent;
 	private final LPath destParent;
 	private final int sourceIndex;
 	private final int destIndex;
 	
-	public LMoveAction(LCollection<T, ?> collection, LPath sourceParent, int sourceIndex, LPath destParent, int destIndex) {
+	public LMoveAction(LEditableCollection<T, ?> collection, LPath sourceParent, int sourceIndex, LPath destParent, int destIndex) {
 		this.collection = collection;
 		this.sourceParent = sourceParent;
 		this.sourceIndex = sourceIndex;

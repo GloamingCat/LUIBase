@@ -3,16 +3,16 @@ package lui.base.action.collection;
 import lui.base.action.LAction;
 import lui.base.data.LPath;
 import lui.base.event.LEditEvent;
-import lui.base.gui.LCollection;
+import lui.base.gui.LEditableCollection;
 
 public class LEditAction<T> implements LAction {
 
-	private final LCollection<?, T> collection;
+	private final LEditableCollection<?, T> collection;
 	private final LPath path;
 	private final T oldData;
 	private final T newData;
 	
-	public LEditAction(LCollection<?, T> collection, LPath path, T oldData, T newData) {
+	public LEditAction(LEditableCollection<?, T> collection, LPath path, T oldData, T newData) {
 		this.collection = collection;
 		this.path = path;
 		this.oldData = oldData;

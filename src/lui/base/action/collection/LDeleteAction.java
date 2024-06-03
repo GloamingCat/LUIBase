@@ -5,16 +5,16 @@ import lui.base.data.LDataTree;
 import lui.base.data.LPath;
 import lui.base.event.LDeleteEvent;
 import lui.base.event.LInsertEvent;
-import lui.base.gui.LCollection;
+import lui.base.gui.LEditableCollection;
 
 public class LDeleteAction<T> implements LAction {
 
-	private final LCollection<T, ?> collection;
+	private final LEditableCollection<T, ?> collection;
 	private final LPath parentPath;
 	private final int index;
 	private final LDataTree<T> node;
 	
-	public LDeleteAction(LCollection<T, ?> c, LPath parentPath, int index, LDataTree<T> node) {
+	public LDeleteAction(LEditableCollection<T, ?> c, LPath parentPath, int index, LDataTree<T> node) {
 		collection = c;
 		this.parentPath = parentPath;
 		this.index = index;

@@ -5,16 +5,16 @@ import lui.base.data.LDataTree;
 import lui.base.data.LPath;
 import lui.base.event.LDeleteEvent;
 import lui.base.event.LInsertEvent;
-import lui.base.gui.LCollection;
+import lui.base.gui.LEditableCollection;
 
 public class LInsertAction<T> implements LAction {
 
-	private final LCollection<T, ?> collection;
+	private final LEditableCollection<T, ?> collection;
 	private final LPath parent;
 	private final int index;
 	private final LDataTree<T> node;
 	
-	public LInsertAction(LCollection<T, ?> c, LPath parent, int index, LDataTree<T> node) {
+	public LInsertAction(LEditableCollection<T, ?> c, LPath parent, int index, LDataTree<T> node) {
 		collection = c;
 		this.parent = parent;
 		this.index = index;
