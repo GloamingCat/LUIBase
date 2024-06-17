@@ -13,7 +13,7 @@ public class LControlAction<T> implements LAction {
 		this.event = event;
 	}
 	
-	private void apply() {
+	public void apply() {
 		control.setValue(event.newValue);
 		control.notifyListeners(event);
 	}

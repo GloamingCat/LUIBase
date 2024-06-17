@@ -10,5 +10,10 @@ public class LControlEvent<T> {
 		this.oldValue = oldValue;
 		this.newValue = newValue;
 	}
+
+	@Override
+	public String toString() {
+		return "oldValue=" + oldValue + "; newValue=" + newValue;
+	}
 	
 }
