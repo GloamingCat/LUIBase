@@ -8,5 +8,6 @@ public interface LDataCollection<T> extends Cloneable {
 	void set(LDataCollection<T> data);
 	LDataCollection<T> clone();
 	LDataTree<T> toTree();
-	
+	LDataList<T> toList();
+
 }

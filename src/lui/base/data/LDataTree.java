@@ -341,7 +341,32 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 
 	@Override
 	public String toString() {
-		return data + " " + children;
+		return id + " " + data + " " + children;
+	}
+
+	private int highestId() {
+		int highest = id;
+		for (var child : children) {
+			highest = Math.max(highest, child.highestId());
+		}
+		return highest;
+	}
+
+	private LDataList<T> toList(LDataList<T> list) {
+		for (var child : children) {
+			list.set(child.id, child.data);
+			child.toList(list);
+		}
+		return list;
+	}
+
+	@Override
+	public LDataList<T> toList() {
+		int n = highestId() + 1;
+		LDataList<T> list = new LDataList<>(n);
+		list.setSize(n);
+		toList(list);
+		return list;
 	}
 
 }

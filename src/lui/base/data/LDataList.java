@@ -19,6 +19,13 @@ public class LDataList<T> extends ArrayList<T> implements LDataCollection<T> {
 	public LDataList(LDataList<T> copy) {
 		super(copy);
 	}
+
+	public void setSize(int n) {
+		while (size() < n)
+			add(null);
+		while (size() > n)
+			removeLast();
+	}
 	
 	@Override
 	public void set(LDataCollection<T> data) {
@@ -65,6 +72,11 @@ public class LDataList<T> extends ArrayList<T> implements LDataCollection<T> {
 		} else {
 			add(destIndex, data);
 		}
+	}
+
+	@Override
+	public LDataList<T> toList() {
+		return this;
 	}
 
 	public LDataTree<T> toTree() {
