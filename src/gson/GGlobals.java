@@ -21,7 +21,9 @@ public interface GGlobals {
 		for (T p : array) {
 			json.append(",").append(elementEncoder.apply(p));
 		}
-		json.deleteCharAt(1).append("]");
+		if (json.length() > 1)
+			json.deleteCharAt(1);
+		json.append("]");
 		return json.toString();
 	}
 
