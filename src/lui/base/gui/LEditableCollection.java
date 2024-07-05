@@ -44,6 +44,14 @@ public interface LEditableCollection<T, ST> extends lui.base.gui.LCollection<T, 
 		}
 		return event;
 	}
+
+	default LInsertEvent<T> newInsertAction(LPath path, LDataTree<T> node) {
+		if (path == null)
+			return newInsertAction(null, -1, node);
+		LPath parentPath = path.removeLast();
+		int index = path.lastChild().index;
+		return newInsertAction(parentPath, index, node);
+	}
 	
 	default LInsertEvent<T> newInsertAction(LPath parentPath, int i, LDataTree<T> node) {
 		LInsertEvent<T> event = insert(parentPath, i, node);
@@ -154,15 +162,5 @@ public interface LEditableCollection<T, ST> extends lui.base.gui.LCollection<T, 
 			listener.onDelete(event);
 		}
 	}
-	
-	//-------------------------------------------------------------------------------------
-	// Object
-	//-------------------------------------------------------------------------------------
-	
-	void refreshObject(LPath path);
-	
-	void refreshAll();
-	
-	LPath getSelectedPath();
-	
+
 }

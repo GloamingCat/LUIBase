@@ -21,14 +21,14 @@ public class LEditAction<T> implements LAction {
 	
 	@Override
 	public void undo() {
-		LEditEvent<T> e = new LEditEvent<T>(path, newData, oldData);
+		LEditEvent<T> e = new LEditEvent<>(path, newData, oldData);
 		collection.notifyEditListeners(e);
 		collection.refreshObject(path);
 	}
 
 	@Override
 	public void redo() {
-		LEditEvent<T> e = new LEditEvent<T>(path, oldData, newData);
+		LEditEvent<T> e = new LEditEvent<>(path, oldData, newData);
 		collection.notifyEditListeners(e);
 		collection.refreshObject(path);
 	}

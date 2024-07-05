@@ -1,6 +1,6 @@
 package lui.base.data;
 
-public class LPath {
+public class LPath implements Cloneable {
 
 	public int index;
 	public LPath child;
@@ -25,7 +25,19 @@ public class LPath {
 		}
 		return p;
 	}
-	
+
+	public LPath removeLast() {
+		if (child == null)
+			return null;
+		LPath path = clone();
+		LPath parent = path;
+		while (parent.child.child != null) {
+			parent = parent.child;
+		}
+		parent.child = null;
+		return path;
+	}
+
 	public LPath addLast(int index) {
 		LPath newPath = new LPath(this.index);
 		LPath newLast = newPath;
@@ -65,5 +77,18 @@ public class LPath {
 		}
 		return s.toString();
 	}
+
+	@Override
+	public LPath clone() {
+        try {
+            LPath copy = (LPath) super.clone();
+			copy.index = index;
+			if (child != null)
+				copy.child = child.clone();
+			return copy;
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
 	
 }

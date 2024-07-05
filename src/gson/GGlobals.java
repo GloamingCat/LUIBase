@@ -19,7 +19,8 @@ public interface GGlobals {
 	static <T> String encodeJsonList(ArrayList<T> array, Function<T, String> elementEncoder) {
 		StringBuilder json = new StringBuilder().append("[");
 		for (T p : array) {
-			json.append(",").append(elementEncoder.apply(p));
+			String element = elementEncoder.apply(p);
+			json.append(",").append(element);
 		}
 		if (json.length() > 1)
 			json.deleteCharAt(1);
