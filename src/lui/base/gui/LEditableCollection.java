@@ -7,6 +7,7 @@ import lui.base.LVocab;
 import lui.base.action.collection.LDeleteAction;
 import lui.base.action.collection.LEditAction;
 import lui.base.action.collection.LInsertAction;
+import lui.base.action.collection.LMoveAction;
 import lui.base.data.LDataCollection;
 import lui.base.data.LDataTree;
 import lui.base.data.LPath;
@@ -35,14 +36,17 @@ public interface LEditableCollection<T, ST> extends lui.base.gui.LCollection<T, 
 	
 	default LEditEvent<ST> newEditAction(LPath path) {
 		LEditEvent<ST> event = edit(path);
-		if (event != null) {
-			if (getMenuInterface() != null) {
-				LEditAction<ST> action = new LEditAction<>(this, path, event.oldData, event.newData);
-				getMenuInterface().actionStack.newAction(action);
-			}
-			notifyEditListeners(event);
-		}
+		if (event != null)
+			newEditAction(event);
 		return event;
+	}
+
+	default void newEditAction(LEditEvent<ST> event) {
+		if (getMenuInterface() != null) {
+			LEditAction<ST> action = new LEditAction<>(this, event.path, event.oldData, event.newData);
+			getMenuInterface().actionStack.newAction(action);
+		}
+		notifyEditListeners(event);
 	}
 
 	default LInsertEvent<T> newInsertAction(LPath path, LDataTree<T> node) {
@@ -55,26 +59,49 @@ public interface LEditableCollection<T, ST> extends lui.base.gui.LCollection<T, 
 	
 	default LInsertEvent<T> newInsertAction(LPath parentPath, int i, LDataTree<T> node) {
 		LInsertEvent<T> event = insert(parentPath, i, node);
-		if (event != null) {
-			if (getMenuInterface() != null) {
-				LInsertAction<T> action = new LInsertAction<>(this, parentPath, event.index, node);
-				getMenuInterface().actionStack.newAction(action);
-			}
-			notifyInsertListeners(event);
-		}
+		if (event != null)
+			newInsertAction(event);
 		return event;
 	}
-	
+
+	default void newInsertAction(LInsertEvent<T> event) {
+		if (getMenuInterface() != null) {
+			LInsertAction<T> action = new LInsertAction<>(this, event.parentPath, event.index, event.node);
+			getMenuInterface().actionStack.newAction(action);
+		}
+		notifyInsertListeners(event);
+	}
+
 	default LDeleteEvent<T> newDeleteAction(LPath parentPath, int i) {
 		LDeleteEvent<T> event = delete(parentPath, i);
-		if (event != null) {
-			if (getMenuInterface() != null) {
-				LDeleteAction<T> action = new LDeleteAction<>(this, parentPath, event.index, event.node);
-				getMenuInterface().actionStack.newAction(action);
-			}
-			notifyDeleteListeners(event);
-		}
+		if (event != null)
+			newDeleteAction(event);
 		return event;
+	}
+
+	default void newDeleteAction(LDeleteEvent<T> event) {
+		if (getMenuInterface() != null) {
+			LDeleteAction<T> action = new LDeleteAction<>(this, event.parentPath, event.index, event.node);
+			getMenuInterface().actionStack.newAction(action);
+		}
+		notifyDeleteListeners(event);
+	}
+
+	default LMoveEvent<T> newMoveAction(LPath sourceParent, int sourceIndex, LPath destParent, int destIndex) {
+		LMoveEvent<T> event = move(sourceParent, sourceIndex, destParent, destIndex);
+		if (event != null)
+			newMoveAction(event);
+		return event;
+	}
+
+	default void newMoveAction(LMoveEvent<T> event) {
+		if (getMenuInterface() != null) {
+			LMoveAction<T> action = new LMoveAction<>(this,
+					event.sourceParent, event.sourceIndex,
+					event.destParent, event.destIndex);
+			getMenuInterface().actionStack.newAction(action);
+		}
+		notifyMoveListeners(event);
 	}
 
 	//-------------------------------------------------------------------------------------

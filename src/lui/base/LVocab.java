@@ -51,7 +51,9 @@ public class LVocab {
 	public String INSERTNEW = "Insert new";
 	public String DUPLICATE = "Duplicate";
 	public String DELETE = "Delete";
-	
+	public String MOVEUP = "Move Up";
+	public String MOVEDOWN = "Move Down";
+
 	public String TEXT = "Text";
 
 	public String COPY = "Copy";
