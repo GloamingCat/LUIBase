@@ -59,6 +59,7 @@ public class LVocab {
 	public String COPY = "Copy";
 	public String PASTE = "Paste";
 
-	public String IMAGESHELL = "Select Image File";
+	public String IMAGEDIALOG = "Select Image File";
+	public String COLORDIALOG = "Choose a color";
 	
 }

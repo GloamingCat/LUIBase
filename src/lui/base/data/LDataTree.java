@@ -203,7 +203,7 @@ public class LDataTree<T> implements Serializable, LDataCollection<T> {
 	}
 	
 	public LDataTree<Object> toObjectTree() {
-		LDataTree<Object> tree = new LDataTree<>(data);
+		LDataTree<Object> tree = new LDataTree<>(id, data);
 		for (LDataTree<T> node : children) {
 			tree.addChild(node.toObjectTree());
 		}
