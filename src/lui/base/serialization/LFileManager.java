@@ -39,11 +39,21 @@ public class LFileManager {
 				throw new IOException("No byte read.");
 			reader.close();
 			return array;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Couldn't load: " + path);
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static boolean makeDirs(File file) {
+		if (!file.exists() && !file.getParentFile().exists()) {
+            if (!file.getParentFile().mkdirs()) {
+				System.err.println("Couldn't create folders for: " + file);
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public static boolean save(String path, byte[] content) {
@@ -51,10 +61,8 @@ public class LFileManager {
 		path = path.replace("/", File.separator);
 		try {
 			File file = new File(path);
-			if (!file.exists() && !file.getParentFile().exists()) {
-				if (!file.getParentFile().mkdirs())
-					throw new IOException("Couldn't create directory.");
-			}
+			if (!makeDirs(file))
+				throw new IOException("Couldn't create directory.");
 			FileOutputStream writer = new FileOutputStream(file);
 			writer.write(content);
 			writer.close();
