@@ -118,8 +118,11 @@ public interface LApplicationWindow extends LWindow {
 	}
 
 	default boolean loadDefault(String path) {
-		if (path == null)
+		if (path == null) {
 			path = getLatestProject();
+			if (path == null)
+				return false;
+		}
 		LSerializer project = createProject(path);
 		if (project == null) {
 			return false;

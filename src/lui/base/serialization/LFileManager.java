@@ -12,13 +12,13 @@ import java.util.logging.SimpleFormatter;
 public class LFileManager {
 	
 	public static String appDataPath(String applicationName) {
-		return System.getenv("APPDATA") + "\\" + applicationName + "\\";
+		return System.getenv("APPDATA") + File.separator + applicationName + File.separator;
 	}
 	
 	public static String applicationPath() {
 		try {
 			String path = new File(".").getCanonicalPath();
-			return path + "/";
+			return path + File.separator;
 		} catch(Exception e) {
 			return "";
 		}
