@@ -6,13 +6,14 @@ import org.ini4j.Ini;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public interface LApplicationWindow extends LWindow {
 
 	//////////////////////////////////////////////////
 	//region UI
 
-	void run();
+	void run(String... args);
 	String getApplicationName();
 	Ini getPreferences();
 
@@ -53,21 +54,37 @@ public interface LApplicationWindow extends LWindow {
 		Ini.Section recent = (Ini.Section) getPreferences().get("file");
 		if (recent == null)
 			recent = getPreferences().add("file");
-		return (String) recent.get("recent", 0);
+		return (String) recent.get("recent0", String.class);
 	}
 
 	default void setLatestProject(String projectPath) {
 		Ini.Section section = (Ini.Section) getPreferences().get("file");
-		String[] files = (String[]) section.getAll("recent", String[].class);
-		if (files == null || files.length == 0) {
-			section.put("recent", projectPath);
-		} else {
-			section.put("recent", projectPath, 0);
-			int n = Math.min(files.length, 9);
-			for (int i = 0; i < n; i++) {
-				section.put("recent", files[i], i + 1);
-			}
+		ArrayList<String> files = new ArrayList<>();
+		for (int i = 0; i < 9; i++) {
+			String file = (String) section.get("recent" + i, String.class);
+			if (file == null)
+				break;
+			files.add(file);
 		}
+		section.put("recent0", projectPath);
+		int n = Math.min(files.size(), 9);
+		for (int i = 0; i < n; i++) {
+			section.put("recent" + (i+1), files.get(i));
+		}
+	}
+
+	default void setPreference(String section, String key, Object value) {
+		Ini.Section s = (Ini.Section) getPreferences().get(section);
+		if (s == null)
+			s = getPreferences().add(section);
+		s.put(key, value);
+	}
+
+	default <T> T getPreference(String section, String key, Class<T> c) {
+		Ini.Section s = (Ini.Section) getPreferences().get(section);
+		if (s == null)
+			return null;
+		return (T) s.get(key, c);
 	}
 
 	//endregion
